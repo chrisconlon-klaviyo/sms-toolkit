@@ -1,0 +1,4 @@
+.python-version
+sms_toolkit.egg-info/
+*.pyc
+.DS_Store
