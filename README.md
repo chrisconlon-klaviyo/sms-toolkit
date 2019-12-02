@@ -12,7 +12,7 @@ Largely based on [this tool](http://chadselph.github.io/smssplit/) (code found [
 
 Example:
 
-```
+```python
 from sms_toolkit.messages.profiling import profile_message
 import json
 
@@ -39,6 +39,8 @@ print(json.dumps(profile, indent=4))
 
 
 ## Testing
+
+Install the test requirements, which as of now can just be installed with `pip install pytest`.
 
 From the root repository directory run the following:
 
