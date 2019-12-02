@@ -3,6 +3,20 @@ from sms_toolkit import constants
 
 
 def profile_message(message):
+    """ Accept a message string and profile its contents.
+
+        We attempt to determine the proper encoding for the string
+        based on what characters it contains. If all characters are
+        in the gsm7 alphabet we can use gsm7 which is has longer
+        segments. Otherwise we have to use ucs2 which can contain
+        non-gsm7 characters but only fit half the characters in each
+        segment.
+
+        Args:
+            message (basestring): The raw message string to profile.
+        Returns:
+            (dict) A dict with the profiling results.
+    """
     encoding = utils.determine_encoding_for_string(message)
 
     if encoding == constants.GSM_ENCODING:
@@ -22,7 +36,7 @@ def profile_message(message):
         )
         message_length = sum(len(utils.flatten(segment['byte_groups'])) for segment in segments) / 2
     else:
-        raise RuntimeError('Unknown encoding determine: {encoding}'.format(encoding=encoding))
+        raise RuntimeError('Unknown encoding: {encoding}'.format(encoding=encoding))
 
     return {
         'num_segments': len(segments),
@@ -31,6 +45,15 @@ def profile_message(message):
     }
 
 def split_message_into_segments(message, max_segment_size, max_concat_segment_size, encoder):
+    """ Using the given encoder, the raw message is split into segments
+
+        Args:
+            message          (basestring): The raw message string to profile.
+            max_segment_size        (int): How large a single segment message
+                                           could be.
+            max_concat_segment_size (int): How large each segment can be.
+            encoder            (function): A function to encode each character.
+    """
     segments = []
     characters = utils.convert_to_unicode_characters(message)
 
@@ -74,6 +97,15 @@ def split_message_into_segments(message, max_segment_size, max_concat_segment_si
     return segments
 
 def format_segment(message, unicode_characters, byte_groups):
+    """ Formats a segment's properties.
+
+        Args:
+            message                 (basestring): The raw message string to profile.
+            unicode_characters (list of unicode): The message split into unicode
+                                                  characters.
+            byte_groups          (list of bytes): The message split into byte groups
+                                                  for each character.
+    """
     return {
         'message': message,
         'unicode_character_list': unicode_characters,
