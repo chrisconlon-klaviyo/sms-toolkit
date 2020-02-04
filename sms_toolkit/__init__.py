@@ -1,0 +1,1 @@
+from sms_toolkit.messages.normalization import normalize_optimistic_gsm_characters
