@@ -31,3 +31,7 @@ def sample_byte_string():
 @pytest.fixture
 def sample_unicode_string():
     return u"This is my ᴍᴀɴᴀɢᴇᴍᴇɴᴛ ᴠᴏɪᴄᴇ."
+
+@pytest.fixture
+def sample_emoji_unicode_string():
+    return u"This is my ᴍᴀɴᴀɢᴇᴍᴇɴᴛ ᴠᴏɪᴄᴇ 🤙."
