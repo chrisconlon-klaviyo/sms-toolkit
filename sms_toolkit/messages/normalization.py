@@ -4,7 +4,7 @@ from sms_toolkit.utils import convert_to_unicode_characters
 
 def normalize_optimistic_gsm_characters(message):
     """
-    Takes a message as input and returns a new message will all the appropriate unicode characters replaced with
+    Takes a message as input and returns a new message replacing all the appropriate unicode characters with
     their GSM-7 equivalent.
 
     Args:
