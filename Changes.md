@@ -11,5 +11,5 @@ Major version bumps should be reserved for API-breaking releases or significant 
 ### 1.0.1 (Feb 5, 2020)
 - *ADDED*: Add support for message normalization.
 - *ADDED*: Add this changelog.
-### 1.0 (Dec ?, 2020)
+### 1.0 (Dec 2, 2019)
 - Initial release.
