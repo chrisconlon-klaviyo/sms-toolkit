@@ -141,6 +141,7 @@ UNICODE_CODE_POINT_TO_GSM_MAP = {
 }
 
 # Map that can be used to replace unicode characters with a GSM equivalent.
+# Generated from https://www.twilio.com/docs/sms/services/copilot-smart-encoding-char-list
 SMART_ENCODING_MAP = {
     0: ' ',
     3: ' ',
