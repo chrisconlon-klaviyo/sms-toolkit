@@ -8,6 +8,7 @@ def is_high_surrogate(character):
 
     return ord(character) >= 0xD800 and ord(character) <= 0xDBFF
 
+
 def convert_to_unicode_characters(string):
     characters = list(string.decode('utf-8'))
     converted_character_list = []
@@ -21,17 +22,21 @@ def convert_to_unicode_characters(string):
 
     return converted_character_list
 
+
 def encode_unicode_character_to_utf16(character):
     if len(character) > 1:
         return flatten(map(encode_unicode_character_to_utf16, character))
 
     return [((0xff00 & ord(character)) >> 8), 0x00ff & ord(character)]
 
+
 def encode_unicode_character_to_gsm(character):
     return constants.UNICODE_CODE_POINT_TO_GSM_MAP[ord(character)]
+
 
 def determine_encoding_for_string(string):
     if all([ord(character) in constants.UNICODE_CODE_POINT_TO_GSM_MAP.keys() for character in string]):
         return constants.GSM_ENCODING
     else:
         return constants.UCS2_ENCODING
+
