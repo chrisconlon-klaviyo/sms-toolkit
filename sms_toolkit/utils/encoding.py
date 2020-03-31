@@ -10,7 +10,9 @@ def is_high_surrogate(character):
 
 
 def convert_to_unicode_characters(string):
-    characters = list(string.decode('utf-8'))
+    from sms_toolkit.messages.normalization import normalize_to_unicode
+
+    characters = list(normalize_to_unicode(string))
     converted_character_list = []
 
     while len(characters) > 0:
@@ -35,6 +37,9 @@ def encode_unicode_character_to_gsm(character):
 
 
 def determine_encoding_for_string(string):
+    from sms_toolkit.messages.normalization import normalize_to_unicode
+
+    string = normalize_to_unicode(string)
     if all([ord(character) in constants.UNICODE_CODE_POINT_TO_GSM_MAP.keys() for character in string]):
         return constants.GSM_ENCODING
     else:
