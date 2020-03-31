@@ -8,6 +8,8 @@ Major version bumps should be reserved for API-breaking releases or significant 
 - *CHANGE*: Behavior change of existing functionality, reserved for major version bumps
 
 ## Versions
+### 1.0.2 (Mar 31, 2020)
+- *BUGFIX*: Better handling of utf-8 encoded strings.
 ### 1.0.1 (Feb 5, 2020)
 - *ADDED*: Add support for message normalization.
 - *ADDED*: Add this changelog.
