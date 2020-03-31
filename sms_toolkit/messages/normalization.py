@@ -17,3 +17,10 @@ def normalize_optimistic_gsm_characters(message):
         message = convert_to_unicode_characters(message)
 
     return ''.join(map(lambda c: unicode_to_gsm_map.SMART_ENCODING_MAP.get(ord(c), c), message))
+
+
+def normalize_to_unicode(message):
+    if not isinstance(message, unicode):
+        return message.decode('utf-8')
+
+    return message
