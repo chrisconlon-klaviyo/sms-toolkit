@@ -14,9 +14,9 @@ def profile_message(message, is_for_mms=False):
 
         Args:
             message (basestring): The raw message string to profile.
+        Kwargs:
             is_for_mms (bool): Is this message for mms sending.
         Returns:
-            (dict) A dict with the profiling results.
     """
     encoding = utils.determine_encoding_for_string(message)
 
