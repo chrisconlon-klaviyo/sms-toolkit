@@ -2,7 +2,7 @@ from sms_toolkit import utils
 from sms_toolkit import constants
 
 
-def profile_message(message):
+def profile_message(message, is_for_mms=False):
     """ Accept a message string and profile its contents.
 
         We attempt to determine the proper encoding for the string
@@ -14,12 +14,21 @@ def profile_message(message):
 
         Args:
             message (basestring): The raw message string to profile.
+            is_for_mms (bool): Is this message for mms sending.
         Returns:
             (dict) A dict with the profiling results.
     """
     encoding = utils.determine_encoding_for_string(message)
 
-    if encoding == constants.GSM_ENCODING:
+    if is_for_mms:
+        segments = split_message_into_segments(
+            message,
+            constants.MMS_MAX_SEGMENT_SIZE,
+            constants.MMS_MAX_CONCAT_SEGMENT_SIZE,
+            utils.encode_unicode_character_to_utf16,
+        )
+        message_length = sum(len(segment['byte_groups']) for segment in segments)
+    elif encoding == constants.GSM_ENCODING:
         segments = split_message_into_segments(
             message,
             constants.GSM_MAX_SEGMENT_SIZE,
