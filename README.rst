@@ -43,10 +43,17 @@ Example:
 
 Testing
 -------
+This library needs is tested against python 2 and 3. Both interpreters need to be available to tox
 
-From the root repository directory run the following:
+::
 
-``pytest -s tests``
+  pyenv versions  # shows all versions available
+  pyenv local 2.7.* 3.7.*
+
+
+Run tests:
+
+``tox .``
 
 .. _this tool: http://chadselph.github.io/smssplit/
 .. _here: https://github.com/chadselph/smssplit/blob/master/js/smssplit.js
