@@ -55,6 +55,7 @@ def profile_message(message, is_for_mms=False):
         'message_length': message_length,
     }
 
+
 def split_message_into_segments(message, max_segment_size, max_concat_segment_size, encoder):
     """ Using the given encoder, the raw message is split into segments
 
@@ -106,6 +107,7 @@ def split_message_into_segments(message, max_segment_size, max_concat_segment_si
         segments.append(format_segment(message, segment_characters, segment_byte_groups))
 
     return segments
+
 
 def format_segment(message, unicode_characters, byte_groups):
     """ Formats a segment's properties.
