@@ -1,3 +1,5 @@
+from __future__ import division
+
 from sms_toolkit import utils
 from sms_toolkit import constants
 
@@ -27,7 +29,7 @@ def profile_message(message, is_for_mms=False):
             constants.MMS_MAX_CONCAT_SEGMENT_SIZE,
             utils.encode_unicode_character_to_utf16,
         )
-        message_length = sum(len(segment['byte_groups']) for segment in segments)
+        message_length = sum(len(list(segment['byte_groups'])) for segment in segments)
     elif encoding == constants.GSM_ENCODING:
         segments = split_message_into_segments(
             message,
@@ -43,7 +45,7 @@ def profile_message(message, is_for_mms=False):
             constants.UCS2_MAX_CONCAT_SEGMENT_SIZE,
             utils.encode_unicode_character_to_utf16,
         )
-        message_length = sum(len(utils.flatten(segment['byte_groups'])) for segment in segments) / 2
+        message_length = sum(len(utils.flatten(segment['byte_groups'])) for segment in segments) // 2
     else:
         raise RuntimeError('Unknown encoding: {encoding}'.format(encoding=encoding))
 
@@ -69,7 +71,7 @@ def split_message_into_segments(message, max_segment_size, max_concat_segment_si
     if len(characters) == 0:
         return segments
 
-    byte_groups = map(lambda character: encoder(character), characters)
+    byte_groups = [encoder(character) for character in characters]
     total_num_bytes = len(utils.flatten(byte_groups))
 
     if total_num_bytes <= max_segment_size:
