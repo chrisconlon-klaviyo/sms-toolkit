@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='sms-toolkit',
-    version='1.0.3',
+    version='1.0.4',
     description='A collection of tools to work with SMS messages.',
     long_description=open('README.rst').read(),
     author='Klaviyo',
