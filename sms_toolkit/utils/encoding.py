@@ -44,4 +44,3 @@ def determine_encoding_for_string(string):
         return constants.GSM_ENCODING
     else:
         return constants.UCS2_ENCODING
-
