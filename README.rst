@@ -3,6 +3,10 @@ sms-toolkit
 
 A collection of tools used to send SMS messages.
 
+.. image:: https://github.com/chrisconlon-klaviyo/sms-toolkit/workflows/Tests/badge.svg
+   :target: https://github.com/chrisconlon-klaviyo/sms-toolkit/actions?query=workflow%3ATests+event%3Apush+branch%3Amaster
+   :alt: Test Status
+
 Tools
 -----
 
