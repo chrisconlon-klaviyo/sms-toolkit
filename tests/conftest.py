@@ -48,10 +48,11 @@ def long_ucs2_text():
 def long_ucs2_expected_segments():
     return [
         "The option to override automatic detonation expires in T minus thre",
-        "e minutes 🤙. The option to override automatic detonation expires in",
-        " T minus one minute. The option to override detonation procedure ha",
-        "s now expired. Mother™! I've turned the cooling unit back on! Mothe",
-        "r 🤙! The ship will automatically destruct in T minus five minutes.",
+        "e minutes 🤙. The option to override automatic detonation expires i",
+        "n T minus one minute. The option to override detonation procedure h",
+        "as now expired. Mother™! I've turned the cooling unit back on! Moth",
+        "er 🤙! The ship will automatically destruct in T minus five minutes",
+        "."
     ]
 
 
