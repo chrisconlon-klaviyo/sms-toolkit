@@ -30,6 +30,9 @@ def profile_message(message, is_for_mms=False):
             utils.encode_unicode_character_to_utf16,
         )
         message_length = sum(len(list(segment['byte_groups'])) for segment in segments)
+        max_segment_size = constants.MMS_MAX_SEGMENT_SIZE if len(segments) <= 1 \
+            else constants.MMS_MAX_CONCAT_SEGMENT_SIZE
+
     elif encoding == constants.GSM_ENCODING:
         segments = split_message_into_segments(
             message,
@@ -38,6 +41,9 @@ def profile_message(message, is_for_mms=False):
             utils.encode_unicode_character_to_gsm,
         )
         message_length = sum(len(segment['byte_groups']) for segment in segments)
+        max_segment_size = constants.GSM_MAX_SEGMENT_SIZE if len(segments) <= 1 \
+            else constants.GSM_MAX_CONCAT_SEGMENT_SIZE
+
     elif encoding == constants.UCS2_ENCODING:
         segments = split_message_into_segments(
             message,
@@ -46,6 +52,10 @@ def profile_message(message, is_for_mms=False):
             utils.encode_unicode_character_to_utf16,
         )
         message_length = sum(len(utils.flatten(segment['byte_groups'])) for segment in segments) // 2
+        max_segment_size = constants.UCS2_MAX_SEGMENT_SIZE if len(segments) <= 1 \
+            else constants.UCS2_MAX_CONCAT_SEGMENT_SIZE
+        max_segment_size = max_segment_size // 2
+
     else:
         raise RuntimeError('Unknown encoding: {encoding}'.format(encoding=encoding))
 
@@ -53,6 +63,7 @@ def profile_message(message, is_for_mms=False):
         'num_segments': len(segments),
         'segments': segments,
         'message_length': message_length,
+        'max_segment_size': max_segment_size,
     }
 
 
@@ -90,6 +101,7 @@ def split_message_into_segments(message, max_segment_size, max_concat_segment_si
             except IndexError:
                 return current_length
 
+        segment_str = ''
         while len(characters) > 0 and get_next_character_length() <= max_concat_segment_size:
             character = characters.pop(0)
 
@@ -103,8 +115,9 @@ def split_message_into_segments(message, max_segment_size, max_concat_segment_si
 
             if byte_group is not None:
                 current_length += len(byte_group)
+            segment_str += character
 
-        segments.append(format_segment(message, segment_characters, segment_byte_groups))
+        segments.append(format_segment(segment_str, segment_characters, segment_byte_groups))
 
     return segments
 
