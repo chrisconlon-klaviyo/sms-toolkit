@@ -6,7 +6,8 @@ class TestMessageSegmenting:
     @staticmethod
     def compare_segments(expected_segments, profiled_segments):
         profiled_messages = [profile["message"] for profile in profiled_segments]
-        assert profiled_messages == expected_segments
+        for profile_message, expected_message in zip(profiled_messages, expected_segments):
+            assert profile_message.encode('utf-8') == expected_message.encode('utf-8')
 
     def test_message_profiling_gsm7(self, short_gsm7_text, long_gsm7_text, long_gsm7_expected_segments,
                                     byte_string_gsm7_chars, unicode_gsm7_chars):
