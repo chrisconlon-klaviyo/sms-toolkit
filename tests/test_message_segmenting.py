@@ -1,6 +1,7 @@
 from sms_toolkit.messages import profiling
 from sms_toolkit import constants
 
+
 class TestMessageSegmenting:
     def test_message_profiling_gsm7(self, short_gsm7_text, long_gsm7_text, byte_string_gsm7_chars, unicode_gsm7_chars):
         profiled_message = profiling.profile_message(short_gsm7_text)
