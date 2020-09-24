@@ -101,6 +101,7 @@ def split_message_into_segments(message, max_segment_size, max_concat_segment_si
             except IndexError:
                 return current_length
 
+        segment_str = ''
         while len(characters) > 0 and get_next_character_length() <= max_concat_segment_size:
             character = characters.pop(0)
 
@@ -114,8 +115,9 @@ def split_message_into_segments(message, max_segment_size, max_concat_segment_si
 
             if byte_group is not None:
                 current_length += len(byte_group)
+            segment_str += character
 
-        segments.append(format_segment(message, segment_characters, segment_byte_groups))
+        segments.append(format_segment(segment_str, segment_characters, segment_byte_groups))
 
     return segments
 
