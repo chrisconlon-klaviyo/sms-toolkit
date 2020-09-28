@@ -132,7 +132,7 @@ def format_segment(message, unicode_characters, byte_groups, is_utf16):
                                                   characters.
             byte_groups          (list of bytes): The message split into byte groups
                                                   for each character.
-            is_ucs2                    (boolean): If the message is in ucs2 encoding
+            is_utf16                   (boolean): If the message is in utf-16 encoding
     """
     total_segment_length = len(utils.flatten(byte_groups))
     if is_utf16:
