@@ -22,16 +22,22 @@ def profile_message(message, is_for_mms=False):
     """
     encoding = utils.determine_encoding_for_string(message)
 
-    if is_for_mms:
+    if is_for_mms or encoding == constants.UCS2_ENCODING:
+        if is_for_mms:
+            single_segment_size = constants.MMS_MAX_SEGMENT_SIZE * 2
+            concat_segment_size = constants.MMS_MAX_CONCAT_SEGMENT_SIZE * 2
+        else:
+            single_segment_size = constants.UCS2_MAX_SEGMENT_SIZE
+            concat_segment_size = constants.UCS2_MAX_CONCAT_SEGMENT_SIZE
+
         segments = split_message_into_segments(
             message,
-            constants.MMS_MAX_SEGMENT_SIZE,
-            constants.MMS_MAX_CONCAT_SEGMENT_SIZE,
+            single_segment_size,
+            concat_segment_size,
             utils.encode_unicode_character_to_utf16,
         )
-        message_length = sum(len(list(segment['byte_groups'])) for segment in segments)
-        max_segment_size = constants.MMS_MAX_SEGMENT_SIZE if len(segments) <= 1 \
-            else constants.MMS_MAX_CONCAT_SEGMENT_SIZE
+        message_length = sum(len(utils.flatten(segment['byte_groups'])) for segment in segments) // 2
+        max_segment_size = (single_segment_size if len(segments) <= 1 else concat_segment_size) // 2
 
     elif encoding == constants.GSM_ENCODING:
         segments = split_message_into_segments(
@@ -43,18 +49,6 @@ def profile_message(message, is_for_mms=False):
         message_length = sum(len(segment['byte_groups']) for segment in segments)
         max_segment_size = constants.GSM_MAX_SEGMENT_SIZE if len(segments) <= 1 \
             else constants.GSM_MAX_CONCAT_SEGMENT_SIZE
-
-    elif encoding == constants.UCS2_ENCODING:
-        segments = split_message_into_segments(
-            message,
-            constants.UCS2_MAX_SEGMENT_SIZE,
-            constants.UCS2_MAX_CONCAT_SEGMENT_SIZE,
-            utils.encode_unicode_character_to_utf16,
-        )
-        message_length = sum(len(utils.flatten(segment['byte_groups'])) for segment in segments) // 2
-        max_segment_size = constants.UCS2_MAX_SEGMENT_SIZE if len(segments) <= 1 \
-            else constants.UCS2_MAX_CONCAT_SEGMENT_SIZE
-        max_segment_size = max_segment_size // 2
 
     else:
         raise RuntimeError('Unknown encoding: {encoding}'.format(encoding=encoding))
