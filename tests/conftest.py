@@ -34,6 +34,16 @@ def long_ucs2_text():
 
 
 @pytest.fixture
+def ucs2_with_surrogate_pairs():
+    return "a 😀 lot 😶 of 😪 emojis 🙈"
+
+
+@pytest.fixture
+def ucs2_without_surrogate_pairs():
+    return "This woⓡks as éxpected"
+
+
+@pytest.fixture
 def sample_byte_string():
     return "This is my ᴍᴀɴᴀɢᴇᴍᴇɴᴛ ᴠᴏɪᴄᴇ."
 
@@ -422,3 +432,60 @@ def long_ucs2_text_byte_list_for_segments():
         [0, 46]
     ]
     ]
+
+
+@pytest.fixture
+def ucs2_with_surrogate_pairs_byte_list_for_segments():
+    return [[
+        [0, 97],
+        [0, 32],
+        [216, 61, 222, 0],  # 😀
+        [0, 32],
+        [0, 108],
+        [0, 111],
+        [0, 116],
+        [0, 32],
+        [216, 61, 222, 54],  # 😶
+        [0, 32],
+        [0, 111],
+        [0, 102],
+        [0, 32],
+        [216, 61, 222, 42],  # 😪
+        [0, 32],
+        [0, 101],
+        [0, 109],
+        [0, 111],
+        [0, 106],
+        [0, 105],
+        [0, 115],
+        [0, 32],
+        [216, 61, 222, 72],  # 🙈
+    ]]
+
+
+@pytest.fixture
+def ucs2_with_non_surrogate_pairs_byte_list_for_segments():
+    return [[
+        [0, 84],
+        [0, 104],
+        [0, 105],
+        [0, 115],
+        [0, 32],
+        [0, 119],
+        [0, 111],
+        [36, 225],
+        [0, 107],
+        [0, 115],
+        [0, 32],
+        [0, 97],
+        [0, 115],
+        [0, 32],
+        [0, 233],
+        [0, 120],
+        [0, 112],
+        [0, 101],
+        [0, 99],
+        [0, 116],
+        [0, 101],
+        [0, 100]
+    ]]
