@@ -5,8 +5,15 @@ from sms_toolkit import constants
 class TestMessageSegmenting:
     @staticmethod
     def assert_segment_lengths_for_profiled_message(profiled_message, expected_total_segment_lengths):
+        assert len(profiled_message["segments"]) == len(expected_total_segment_lengths)
         for i, segment in enumerate(profiled_message["segments"]):
             assert expected_total_segment_lengths[i] == segment["total_segment_length"]
+
+    @staticmethod
+    def assert_segment_byte_list_for_profiled_message(profiled_message, expected_byte_list_for_segments):
+        assert len(profiled_message["segments"]) == len(expected_byte_list_for_segments)
+        for i, segment in enumerate(profiled_message["segments"]):
+            assert  segment["byte_groups"] == expected_byte_list_for_segments[i]
 
     def test_message_profiling_gsm7(self, short_gsm7_text, long_gsm7_text, byte_string_gsm7_chars, unicode_gsm7_chars):
         profiled_message = profiling.profile_message(short_gsm7_text)
@@ -49,7 +56,13 @@ class TestMessageSegmenting:
             expected_total_segment_lengths=[106]
         )
 
-    def test_message_profiling_ucs2(self, short_ucs2_text, long_ucs2_text):
+    def test_message_profiling_ucs2(
+            self,
+            short_ucs2_text,
+            long_ucs2_text,
+            short_ucs2_text_byte_list_for_segments,
+            long_ucs2_text_byte_list_for_segments
+    ):
         profiled_message = profiling.profile_message(short_ucs2_text)
         assert profiled_message["num_segments"] == 1
         assert profiled_message["message_length"] == 15
@@ -58,6 +71,10 @@ class TestMessageSegmenting:
         self.assert_segment_lengths_for_profiled_message(
             profiled_message,
             expected_total_segment_lengths=[15]
+        )
+        self.assert_segment_byte_list_for_profiled_message(
+            profiled_message,
+            expected_byte_list_for_segments=short_ucs2_text_byte_list_for_segments
         )
 
         profiled_message = profiling.profile_message(long_ucs2_text)
