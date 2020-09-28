@@ -79,6 +79,7 @@ def split_message_into_segments(message, max_segment_size, max_concat_segment_si
     """
     segments = []
     characters = utils.convert_to_unicode_characters(message)
+    is_ucs2 = encoder == utils.encode_unicode_character_to_utf16
 
     if len(characters) == 0:
         return segments
@@ -87,7 +88,7 @@ def split_message_into_segments(message, max_segment_size, max_concat_segment_si
     total_num_bytes = len(utils.flatten(byte_groups))
 
     if total_num_bytes <= max_segment_size:
-        segments.append(format_segment(message, characters, byte_groups))
+        segments.append(format_segment(message, characters, byte_groups, is_ucs2))
         return segments
 
     while len(characters) > 0:
@@ -117,12 +118,12 @@ def split_message_into_segments(message, max_segment_size, max_concat_segment_si
                 current_length += len(byte_group)
             segment_str += character
 
-        segments.append(format_segment(segment_str, segment_characters, segment_byte_groups))
+        segments.append(format_segment(segment_str, segment_characters, segment_byte_groups, is_ucs2))
 
     return segments
 
 
-def format_segment(message, unicode_characters, byte_groups):
+def format_segment(message, unicode_characters, byte_groups, is_ucs2):
     """ Formats a segment's properties.
 
         Args:
@@ -131,10 +132,14 @@ def format_segment(message, unicode_characters, byte_groups):
                                                   characters.
             byte_groups          (list of bytes): The message split into byte groups
                                                   for each character.
+            is_ucs2                    (boolean): If the message is in ucs2 encoding
     """
+    total_segment_length = len(utils.flatten(byte_groups))
+    if is_ucs2:
+        total_segment_length = total_segment_length // 2
     return {
         'message': message,
         'unicode_character_list': unicode_characters,
         'byte_groups': byte_groups,
-        'total_segment_length': len(utils.flatten(byte_groups)),
+        'total_segment_length': total_segment_length,
     }
