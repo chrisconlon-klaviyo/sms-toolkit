@@ -86,6 +86,10 @@ class TestMessageSegmenting:
             profiled_message,
             expected_total_segment_lengths=[67, 67, 67, 67, 67, 1]
         )
+        self.assert_segment_byte_list_for_profiled_message(
+            profiled_message,
+            expected_byte_list_for_segments=long_ucs2_text_byte_list_for_segments
+        )
 
     def test_message_profiling_mms_gsm7(self, short_gsm7_text, long_gsm7_text, byte_string_gsm7_chars,
                                         unicode_gsm7_chars):

@@ -418,4 +418,7 @@ def long_ucs2_text_byte_list_for_segments():
         [0, 116],
         [0, 101],
         [0, 115]
-    ]]
+    ], [
+        [0, 46]
+    ]
+    ]
