@@ -1,5 +1,4 @@
 from sms_toolkit import constants
-from sms_toolkit.utils.general import flatten
 import sys
 
 
