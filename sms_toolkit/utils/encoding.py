@@ -31,7 +31,7 @@ def convert_to_unicode_characters(string):
 
 def encode_unicode_character_to_utf16(character):
     """
-    Encode the given unicode code points into utf-16 and return a list a of bytes. Note that for code-points within
+    Encode the given unicode code points into utf-16 and return a list of bytes. Note that for code-points within
     the BMP the number of bytes would be 2, but for code-points not in BMP, the number of bytes will be 4.
 
     Args:
