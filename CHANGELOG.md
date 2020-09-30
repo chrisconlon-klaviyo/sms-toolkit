@@ -8,6 +8,9 @@ Major version bumps should be reserved for API-breaking releases or significant 
 - *CHANGE*: Behavior change of existing functionality, reserved for major version bumps
 
 ## Versions
+### 1.0.7
+- *BUGFIX* Fix the correct encoding in py2 and py3 for unicode characters outside the BMP
+
 ### 1.0.6
 - *BUGFIX* Fix `total_segment_length` calculation for UCS-2 encoding
 - *BUGFIX* Calculate MMS properties similar to how UCS-2 encoding is calculated
