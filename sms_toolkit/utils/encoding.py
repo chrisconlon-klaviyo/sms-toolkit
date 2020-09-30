@@ -1,5 +1,9 @@
 from sms_toolkit import constants
-from sms_toolkit.utils.general import flatten
+import sys
+
+
+def is_python_3():
+    return sys.version_info[0] == 3
 
 
 def is_high_surrogate(character):
@@ -26,10 +30,20 @@ def convert_to_unicode_characters(string):
 
 
 def encode_unicode_character_to_utf16(character):
-    if len(character) > 1:
-        return flatten(map(encode_unicode_character_to_utf16, character))
+    """
+    Encode the given unicode code points into utf-16 and return a list of bytes. Note that for code-points within
+    the BMP the number of bytes would be 2, but for code-points not in BMP, the number of bytes will be 4.
 
-    return [((0xff00 & ord(character)) >> 8), 0x00ff & ord(character)]
+    Args:
+        character: A unicode code-point
+
+    Returns:
+        A list of the bytes
+    """
+    if is_python_3():
+        return [c for c in character.encode('utf-16-be')]
+    else:
+        return [ord(c) for c in character.encode('utf-16-be')]
 
 
 def encode_unicode_character_to_gsm(character):
