@@ -93,5 +93,5 @@ Run tests:
 
 .. _this tool: http://chadselph.github.io/smssplit/
 .. _here: https://github.com/chadselph/smssplit/blob/master/js/smssplit.js
-.. _these standards:https://en.wikipedia.org/wiki/SMS#Message_size
-.. _BMP:https://en.wikipedia.org/wiki/Plane_(Unicode)#Basic_Multilingual_Plane
+.. _these standards: https://en.wikipedia.org/wiki/SMS#Message_size
+.. _BMP: https://en.wikipedia.org/wiki/Plane_(Unicode)#Basic_Multilingual_Plane
