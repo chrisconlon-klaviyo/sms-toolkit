@@ -48,7 +48,7 @@ Here is an example with simple ascii input, which will be profiled as GSM-7 form
     }
     '''
 
-Here is an example with non-ascii input, containing characters from BMP (represented as 2 bytes byte-group)
+Here is an example with non-ascii input, containing characters from `BMP`_ (represented as 2 bytes byte-group)
 and non-BMP (representing as 4 bytes in the byte-group) ranges which will be profiled as UCS-2 format:
 
 .. code-block:: python
@@ -94,3 +94,4 @@ Run tests:
 .. _this tool: http://chadselph.github.io/smssplit/
 .. _here: https://github.com/chadselph/smssplit/blob/master/js/smssplit.js
 .. _these standards:https://en.wikipedia.org/wiki/SMS#Message_size
+.. _BMP:https://en.wikipedia.org/wiki/Plane_(Unicode)#Basic_Multilingual_Plane
