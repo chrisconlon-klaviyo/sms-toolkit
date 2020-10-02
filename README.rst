@@ -18,7 +18,7 @@ encoding, then determines how many segments would be used to send it.
 
 Largely based on `this tool`_ (code found `here`_).
 
-The segmenting logic for GSM-7 and UCS-2 encoding follows [these standards](https://en.wikipedia.org/wiki/SMS#Message_size)
+The segmenting logic for GSM-7 and UCS-2 encoding follows `these standards`_
 
 Here is an example with simple ascii input, which will be profiled as GSM-7 format:
 
@@ -93,3 +93,4 @@ Run tests:
 
 .. _this tool: http://chadselph.github.io/smssplit/
 .. _here: https://github.com/chadselph/smssplit/blob/master/js/smssplit.js
+.. _these standards:https://en.wikipedia.org/wiki/SMS#Message_size
