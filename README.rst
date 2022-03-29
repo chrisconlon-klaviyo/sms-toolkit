@@ -95,3 +95,9 @@ Run tests:
 .. _here: https://github.com/chadselph/smssplit/blob/master/js/smssplit.js
 .. _these standards: https://en.wikipedia.org/wiki/SMS#Message_size
 .. _BMP: https://en.wikipedia.org/wiki/Plane_(Unicode)#Basic_Multilingual_Plane
+
+Acknowledgements
+----------------
+
+Klaviyo has adapted the original `vobject <https://eventable.github.io/vobject/>`_ packaged in to this package.
+Klaviyo has adapted this module for py3 only. This adapted module will not work for py2.
