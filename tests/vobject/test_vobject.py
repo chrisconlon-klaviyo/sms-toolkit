@@ -294,7 +294,8 @@ class TestBehaviors(unittest.TestCase):
                     )
                 )
             ),
-            "<RDATE{'VALUE': ['DATE']}[datetime.date(1997, 3, 4), datetime.date(1997, 5, 4), datetime.date(1997, 7, 4), datetime.date(1997, 9, 4)]>",
+            "<RDATE{'VALUE': ['DATE']}[datetime.date(1997, 3, 4), datetime.date(1997, 5, 4), datetime.date(1997, 7, "
+            "4), datetime.date(1997, 9, 4)]>",
         )
         self.assertEqual(
             str(
@@ -304,7 +305,8 @@ class TestBehaviors(unittest.TestCase):
                     )
                 )
             ),
-            "<RDATE{'VALUE': ['PERIOD']}[(datetime.datetime(1996, 4, 3, 2, 0, tzinfo=tzutc()), datetime.datetime(1996, 4, 3, 4, 0, tzinfo=tzutc())), (datetime.datetime(1996, 4, 4, 1, 0, tzinfo=tzutc()), "
+            "<RDATE{'VALUE': ['PERIOD']}[(datetime.datetime(1996, 4, 3, 2, 0, tzinfo=tzutc()), datetime.datetime("
+            "1996, 4, 3, 4, 0, tzinfo=tzutc())), (datetime.datetime(1996, 4, 4, 1, 0, tzinfo=tzutc()), "
             + (
                 "datetime.timedelta(0, 10800)"
                 if sys.version_info < (3, 7)
@@ -443,7 +445,9 @@ class TestGeneralFileParsing(unittest.TestCase):
         silly = base.readOne(cal)
         self.assertEqual(
             str(silly),
-            "<SILLYPROFILE| [<MORESTUFF{}this line is not folded, but in practice probably ought to be, as it is exceptionally long, and moreover demonstratively stupid>, <SILLYNAME{}name>, <STUFF{}foldedline>]>",
+            "<SILLYPROFILE| [<MORESTUFF{}this line is not folded, but in practice probably ought to be, "
+            "as it is exceptionally long, and moreover demonstratively stupid>, <SILLYNAME{}name>, "
+            "<STUFF{}foldedline>]>",
         )
         self.assertEqual(str(silly.stuff), "<STUFF{}foldedline>")
 

@@ -12,7 +12,7 @@ URL:http://www.web2con.com/
 DTSTART:20051005
 DTEND:20051008
 SUMMARY:Web 2.0 Conference
-LOCATION:Argent Hotel\, San Francisco\, CA
+LOCATION:Argent Hotel, San Francisco, CA
 END:VEVENT
 END:VCALENDAR
 

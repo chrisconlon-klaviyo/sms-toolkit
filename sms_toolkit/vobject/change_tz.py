@@ -8,7 +8,7 @@ from sms_toolkit.vobject import base, icalendar
 
 try:
     import PyICU
-except:
+except Exception:
     PyICU = None
 
 from datetime import datetime

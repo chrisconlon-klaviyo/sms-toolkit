@@ -33,6 +33,8 @@ basestring = (str, bytes)
 #         else:
 #             return str(s)
 # except NameError:
+
+
 def str_(s):
     """
     Return string
@@ -764,7 +766,7 @@ patterns = {}
 
 # Note that underscore is not legal for names, it's included because
 # Lotus Notes uses it
-patterns["name"] = "[a-zA-Z0-9\-_]+"
+patterns["name"] = "[a-zA-Z0-9-_]+"
 patterns["safe_char"] = '[^";:,]'
 patterns["qsafe_char"] = '[^"]'
 
@@ -1278,5 +1280,5 @@ def newFromBehavior(name, id=None):
 
 # --------------------------- Helper function ----------------------------------
 def backslashEscape(s):
-    s = s.replace("\\", "\\\\").replace(";", "\;").replace(",", "\,")
+    s = s.replace("\\", "\\\\").replace(";", ";").replace(",", ",")
     return s.replace("\r\n", "\\n").replace("\n", "\\n").replace("\r", "\\n")
