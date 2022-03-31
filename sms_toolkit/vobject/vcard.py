@@ -1,10 +1,11 @@
 """Definitions and behavior for vCard 3.0"""
 
+from __future__ import annotations
+
 import codecs
 
 from . import behavior
-
-from .base import ContentLine, registerBehavior, backslashEscape, str_
+from .base import ContentLine, backslashEscape, registerBehavior, str_
 from .icalendar import stringToTextValues
 
 """NOTE. Klaviyo has adapted this module for py3 only. This adapted module will not work for py2."""
@@ -19,8 +20,7 @@ basestring = (str, bytes)
 
 
 class Name(object):
-    def __init__(self, family='', given='', additional='', prefix='',
-                 suffix=''):
+    def __init__(self, family="", given="", additional="", prefix="", suffix=""):
         """
         Each name attribute can be a string or a list of strings.
         """
@@ -36,12 +36,12 @@ class Name(object):
         Turn a string or array value into a string.
         """
         if type(val) in (list, tuple):
-            return ' '.join(val)
+            return " ".join(val)
         return val
 
     def __str__(self):
-        eng_order = ('prefix', 'given', 'additional', 'family', 'suffix')
-        out = ' '.join(self.toString(getattr(self, val)) for val in eng_order)
+        eng_order = ("prefix", "given", "additional", "family", "suffix")
+        out = " ".join(self.toString(getattr(self, val)) for val in eng_order)
         return str_(out)
 
     def __repr__(self):
@@ -49,18 +49,21 @@ class Name(object):
 
     def __eq__(self, other):
         try:
-            return (self.family == other.family and
-                    self.given == other.given and
-                    self.additional == other.additional and
-                    self.prefix == other.prefix and
-                    self.suffix == other.suffix)
+            return (
+                self.family == other.family
+                and self.given == other.given
+                and self.additional == other.additional
+                and self.prefix == other.prefix
+                and self.suffix == other.suffix
+            )
         except:
             return False
 
 
 class Address(object):
-    def __init__(self, street='', city='', region='', code='',
-                 country='', box='', extended=''):
+    def __init__(
+        self, street="", city="", region="", code="", country="", box="", extended=""
+    ):
         """
         Each name attribute can be a string or a list of strings.
         """
@@ -73,7 +76,7 @@ class Address(object):
         self.country = country
 
     @staticmethod
-    def toString(val, join_char='\n'):
+    def toString(val, join_char="\n"):
         """
         Turn a string or array value into a string.
         """
@@ -81,17 +84,21 @@ class Address(object):
             return join_char.join(val)
         return val
 
-    lines = ('box', 'extended', 'street')
-    one_line = ('city', 'region', 'code')
+    lines = ("box", "extended", "street")
+    one_line = ("city", "region", "code")
 
     def __str__(self):
-        lines = '\n'.join(self.toString(getattr(self, val))
-                          for val in self.lines if getattr(self, val))
-        one_line = tuple(self.toString(getattr(self, val), ' ')
-                         for val in self.one_line)
+        lines = "\n".join(
+            self.toString(getattr(self, val))
+            for val in self.lines
+            if getattr(self, val)
+        )
+        one_line = tuple(
+            self.toString(getattr(self, val), " ") for val in self.one_line
+        )
         lines += "\n{0!s}, {1!s} {2!s}".format(*one_line)
         if self.country:
-            lines += '\n' + self.toString(self.country)
+            lines += "\n" + self.toString(self.country)
         return lines
 
     def __repr__(self):
@@ -99,18 +106,21 @@ class Address(object):
 
     def __eq__(self, other):
         try:
-            return (self.box == other.box and
-                    self.extended == other.extended and
-                    self.street == other.street and
-                    self.city == other.city and
-                    self.region == other.region and
-                    self.code == other.code and
-                    self.country == other.country)
+            return (
+                self.box == other.box
+                and self.extended == other.extended
+                and self.street == other.street
+                and self.city == other.city
+                and self.region == other.region
+                and self.code == other.code
+                and self.country == other.country
+            )
         except:
             return False
 
 
 # ------------------------ Registered Behavior subclasses ----------------------
+
 
 class VCardTextBehavior(behavior.Behavior):
     """
@@ -119,8 +129,9 @@ class VCardTextBehavior(behavior.Behavior):
     TextBehavior also deals with base64 encoding if the ENCODING parameter is
     explicitly set to BASE64.
     """
+
     allowGroup = True
-    base64string = 'B'
+    base64string = "B"
 
     @classmethod
     def decode(cls, line):
@@ -133,10 +144,10 @@ class VCardTextBehavior(behavior.Behavior):
         ENCODING=b
         """
         if line.encoded:
-            if 'BASE64' in line.singletonparams:
-                line.singletonparams.remove('BASE64')
+            if "BASE64" in line.singletonparams:
+                line.singletonparams.remove("BASE64")
                 line.encoding_param = cls.base64string
-            encoding = getattr(line, 'encoding_param', None)
+            encoding = getattr(line, "encoding_param", None)
             if encoding:
                 if isinstance(line.value, bytes):
                     line.value = codecs.decode(line.value, "base64")
@@ -152,12 +163,18 @@ class VCardTextBehavior(behavior.Behavior):
         Backslash escape line.value.
         """
         if not line.encoded:
-            encoding = getattr(line, 'encoding_param', None)
+            encoding = getattr(line, "encoding_param", None)
             if encoding and encoding.upper() == cls.base64string:
                 if isinstance(line.value, bytes):
-                    line.value = codecs.encode(line.value, "base64").decode("utf-8").replace('\n', '')
+                    line.value = (
+                        codecs.encode(line.value, "base64")
+                        .decode("utf-8")
+                        .replace("\n", "")
+                    )
                 else:
-                    line.value = codecs.encode(line.value.encode(encoding), "base64").decode("utf-8")
+                    line.value = codecs.encode(
+                        line.value.encode(encoding), "base64"
+                    ).decode("utf-8")
             else:
                 line.value = backslashEscape(line.value)
             line.encoded = True
@@ -172,22 +189,23 @@ class VCard3_0(VCardBehavior):
     """
     vCard 3.0 behavior.
     """
-    name = 'VCARD'
-    description = 'vCard 3.0, defined in rfc2426'
-    versionString = '3.0'
+
+    name = "VCARD"
+    description = "vCard 3.0, defined in rfc2426"
+    versionString = "3.0"
     isComponent = True
-    sortFirst = ('version', 'prodid', 'uid')
+    sortFirst = ("version", "prodid", "uid")
     knownChildren = {
-        'N':          (0, 1, None),  # min, max, behaviorRegistry id
-        'FN':         (1, None, None),
-        'VERSION':    (1, 1, None),  # required, auto-generated
-        'PRODID':     (0, 1, None),
-        'LABEL':      (0, None, None),
-        'UID':        (0, None, None),
-        'ADR':        (0, None, None),
-        'ORG':        (0, None, None),
-        'PHOTO':      (0, None, None),
-        'CATEGORIES': (0, None, None)
+        "N": (0, 1, None),  # min, max, behaviorRegistry id
+        "FN": (1, None, None),
+        "VERSION": (1, 1, None),  # required, auto-generated
+        "PRODID": (0, 1, None),
+        "LABEL": (0, None, None),
+        "UID": (0, None, None),
+        "ADR": (0, None, None),
+        "ORG": (0, None, None),
+        "PHOTO": (0, None, None),
+        "CATEGORIES": (0, None, None),
     }
 
     @classmethod
@@ -198,29 +216,35 @@ class VCard3_0(VCardBehavior):
         VTIMEZONEs will need to exist whenever TZID parameters exist or when
         datetimes with tzinfo exist.
         """
-        if not hasattr(obj, 'version'):
-            obj.add(ContentLine('VERSION', [], cls.versionString))
+        if not hasattr(obj, "version"):
+            obj.add(ContentLine("VERSION", [], cls.versionString))
+
+
 registerBehavior(VCard3_0, default=True)
 
 
 class FN(VCardTextBehavior):
     name = "FN"
-    description = 'Formatted name'
+    description = "Formatted name"
+
+
 registerBehavior(FN)
 
 
 class Label(VCardTextBehavior):
     name = "Label"
-    description = 'Formatted address'
+    description = "Formatted address"
+
+
 registerBehavior(Label)
 
 wacky_apple_photo_serialize = True
-REALLY_LARGE = 1E50
+REALLY_LARGE = 1e50
 
 
 class Photo(VCardTextBehavior):
     name = "Photo"
-    description = 'Photograph'
+    description = "Photograph"
 
     @classmethod
     def valueRepr(cls, line):
@@ -237,6 +261,7 @@ class Photo(VCardTextBehavior):
             lineLength = REALLY_LARGE
         VCardTextBehavior.serialize(obj, buf, lineLength, validate)
 
+
 registerBehavior(Photo)
 
 
@@ -252,8 +277,10 @@ def splitFields(string):
     """
     Return a list of strings or lists from a Name or Address.
     """
-    return [toListOrString(i) for i in
-            stringToTextValues(string, listSeparator=';', charList=';')]
+    return [
+        toListOrString(i)
+        for i in stringToTextValues(string, listSeparator=";", charList=";")
+    ]
 
 
 def toList(stringOrList):
@@ -274,21 +301,22 @@ def serializeFields(obj, order=None):
         fields = [backslashEscape(val) for val in obj]
     else:
         for field in order:
-            escapedValueList = [backslashEscape(val) for val in
-                                toList(getattr(obj, field))]
-            fields.append(','.join(escapedValueList))
-    return ';'.join(fields)
+            escapedValueList = [
+                backslashEscape(val) for val in toList(getattr(obj, field))
+            ]
+            fields.append(",".join(escapedValueList))
+    return ";".join(fields)
 
 
-NAME_ORDER = ('family', 'given', 'additional', 'prefix', 'suffix')
-ADDRESS_ORDER = ('box', 'extended', 'street', 'city', 'region', 'code',
-                 'country')
+NAME_ORDER = ("family", "given", "additional", "prefix", "suffix")
+ADDRESS_ORDER = ("box", "extended", "street", "city", "region", "code", "country")
 
 
 class NameBehavior(VCardBehavior):
     """
     A structured name.
     """
+
     hasNative = True
 
     @staticmethod
@@ -310,13 +338,16 @@ class NameBehavior(VCardBehavior):
         obj.isNative = False
         obj.value = serializeFields(obj.value, NAME_ORDER)
         return obj
-registerBehavior(NameBehavior, 'N')
+
+
+registerBehavior(NameBehavior, "N")
 
 
 class AddressBehavior(VCardBehavior):
     """
     A structured address.
     """
+
     hasNative = True
 
     @staticmethod
@@ -338,13 +369,16 @@ class AddressBehavior(VCardBehavior):
         obj.isNative = False
         obj.value = serializeFields(obj.value, ADDRESS_ORDER)
         return obj
-registerBehavior(AddressBehavior, 'ADR')
+
+
+registerBehavior(AddressBehavior, "ADR")
 
 
 class OrgBehavior(VCardBehavior):
     """
     A list of organization values and sub-organization values.
     """
+
     hasNative = True
 
     @staticmethod
@@ -368,4 +402,6 @@ class OrgBehavior(VCardBehavior):
         obj.isNative = False
         obj.value = serializeFields(obj.value)
         return obj
-registerBehavior(OrgBehavior, 'ORG')
+
+
+registerBehavior(OrgBehavior, "ORG")

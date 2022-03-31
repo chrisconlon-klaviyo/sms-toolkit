@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 from . import base
 
 
-#------------------------ Abstract class for behavior --------------------------
+# ------------------------ Abstract class for behavior --------------------------
 class Behavior(object):
     """
     Behavior (validation, encoding, and transformations) for vobjects.
@@ -43,9 +45,10 @@ class Behavior(object):
     @cvar allowGroup:
         Whether or not vCard style group prefixes are allowed.
     """
-    name = ''
-    description = ''
-    versionString = ''
+
+    name = ""
+    description = ""
+    versionString = ""
     knownChildren = {}
     quotedPrintable = False
     defaultBehavior = None
@@ -90,7 +93,7 @@ class Behavior(object):
                 if count.get(key, 0) < val[0]:
                     if raiseException:
                         m = "{0} components must contain at least {1} {2}"
-                        raise base.ValidateError(m .format(cls.name, val[0], key))
+                        raise base.ValidateError(m.format(cls.name, val[0], key))
                     return False
                 if val[1] and count.get(key, 0) > val[1]:
                     if raiseException:
