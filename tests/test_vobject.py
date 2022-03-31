@@ -34,7 +34,7 @@ def get_test_file(path):
     """
     Helper function to open and read test files.
     """
-    filepath = "test_files/{}".format(path)
+    filepath = "vobject_test_files/{}".format(path)
     if sys.version_info[0] < 3:
         # On python 2, this library operates on bytes.
         f = open(filepath, "r")
