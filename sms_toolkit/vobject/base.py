@@ -9,34 +9,13 @@ import re
 import six
 import sys
 
-# ------------------------------------ Python 2/3 compatibility challenges  ----
-# Python 3 no longer has a basestring type, so....
-try:
-    basestring = basestring
-except NameError:
-    basestring = (str, bytes)
+basestring = (str, bytes)
 
-# One more problem ... in python2 the str operator breaks on unicode
-# objects containing non-ascii characters
-try:
-    unicode
-
-    def str_(s):
-        """
-        Return byte string with correct encoding
-        """
-        if type(s) == unicode:
-            return s.encode("utf-8")
-        else:
-            return str(s)
-
-except NameError:
-
-    def str_(s):
-        """
-        Return string
-        """
-        return s
+def str_(s):
+    """
+    Return string
+    """
+    return s
 
 
 if not isinstance(b"", type("")):
@@ -457,7 +436,7 @@ class ContentLine(VBase):
     def __str__(self):
         try:
             return "<{0}{1}{2}>".format(self.name, self.params, self.valueRepr())
-        except UnicodeEncodeError as e:
+        except UnicodeEncodeError:
             return "<{0}{1}{2}>".format(
                 self.name, self.params, self.valueRepr().encode("utf-8")
             )
