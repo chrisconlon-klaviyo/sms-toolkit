@@ -8,11 +8,7 @@ from .base import ContentLine, registerBehavior, backslashEscape, str_
 from .icalendar import stringToTextValues
 
 
-# Python 3 no longer has a basestring type, so....
-try:
-    basestring = basestring
-except NameError:
-    basestring = (str, bytes)
+basestring = (str, bytes)
 
 # ------------------------ vCard structs ---------------------------------------
 
@@ -54,7 +50,7 @@ class Name(object):
                 and self.prefix == other.prefix
                 and self.suffix == other.suffix
             )
-        except:
+        except Exception:
             return False
 
 
@@ -113,7 +109,7 @@ class Address(object):
                 and self.code == other.code
                 and self.country == other.country
             )
-        except:
+        except Exception:
             return False
 
 

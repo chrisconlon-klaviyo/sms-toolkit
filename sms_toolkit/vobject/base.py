@@ -11,6 +11,7 @@ import sys
 
 basestring = (str, bytes)
 
+
 def str_(s):
     """
     Return string

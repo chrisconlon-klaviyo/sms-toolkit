@@ -16,10 +16,10 @@ WEEKS = datetime.timedelta(7)
 
 def list_timezones():
     """Return a list of all time zones known to the system."""
-    l = []
+    list_time_zones = []
     for i in range(parentsize):
-        l.append(winreg.EnumKey(tzparent, i))
-    return l
+        list_time_zones.append(winreg.EnumKey(tzparent, i))
+    return list_time_zones
 
 
 class win32tz(datetime.tzinfo):
@@ -168,7 +168,8 @@ def valuesToDict(key):
 
 
 def _test():
-    import win32tz, doctest
+    import win32tz
+    import doctest
 
     doctest.testmod(win32tz, verbose=0)
 
