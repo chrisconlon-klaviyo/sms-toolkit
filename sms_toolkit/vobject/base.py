@@ -67,6 +67,7 @@ SPACE = " "
 TAB = "\t"
 SPACEORTAB = SPACE + TAB
 
+
 # --------------------------------- Main classes -------------------------------
 
 
@@ -285,16 +286,16 @@ class ContentLine(VBase):
     """
 
     def __init__(
-        self,
-        name,
-        params,
-        value,
-        group=None,
-        encoded=False,
-        isNative=False,
-        lineNumber=None,
-        *args,
-        **kwds
+            self,
+            name,
+            params,
+            value,
+            group=None,
+            encoded=False,
+            isNative=False,
+            lineNumber=None,
+            *args,
+            **kwds
     ):
         """
         Take output from parseLine, convert params list to dictionary.
@@ -365,9 +366,9 @@ class ContentLine(VBase):
     def __eq__(self, other):
         try:
             return (
-                (self.name == other.name)
-                and (self.params == other.params)
-                and (self.value == other.value)
+                    (self.name == other.name)
+                    and (self.params == other.params)
+                    and (self.value == other.value)
             )
         except Exception:
             return False
@@ -754,7 +755,6 @@ patterns["qsafe_char"] = '[^"]'
 
 patterns["param_value"] = ' "{qsafe_char!s} * " | {safe_char!s} * '.format(**patterns)
 
-
 # get a tuple of two elements, one will be empty, the other will have the value
 patterns[
     "param_value_grouped"
@@ -1106,11 +1106,11 @@ class Stack:
 
 
 def readComponents(
-    streamOrString,
-    validate=False,
-    transform=True,
-    ignoreUnreadable=False,
-    allowQP=False,
+        streamOrString,
+        validate=False,
+        transform=True,
+        ignoreUnreadable=False,
+        allowQP=False,
 ):
     """
     Generate one Component at a time from a stream.
@@ -1189,7 +1189,7 @@ def readComponents(
 
 
 def readOne(
-    stream, validate=False, transform=True, ignoreUnreadable=False, allowQP=False
+        stream, validate=False, transform=True, ignoreUnreadable=False, allowQP=False
 ):
     """
     Return the first component from stream.
@@ -1257,5 +1257,5 @@ def newFromBehavior(name, id=None):
 
 # --------------------------- Helper function ----------------------------------
 def backslashEscape(s):
-    s = s.replace("\\", "\\\\").replace(";", "\;").replace(",", "\,")
+    s = s.replace("\\", "\\\\").replace(";", "\\;").replace(",", "\\,")
     return s.replace("\r\n", "\\n").replace("\n", "\\n").replace("\r", "\\n")
