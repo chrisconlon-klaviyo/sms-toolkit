@@ -3,7 +3,7 @@ branch = True
 source = sms_toolkit
 
 [report]
-fail_under = 85
+fail_under = 1
 exclude_lines =
     if self.debug:
     pragma: no cover
