@@ -78,12 +78,8 @@ VObject Overview
 
 from __future__ import annotations
 
-from . import icalendar, vcard
+from . import vcard
 from .base import newFromBehavior, readComponents, readOne
-
-
-def iCalendar():
-    return newFromBehavior("vcalendar", "2.0")
 
 
 def vCard():

@@ -3,10 +3,16 @@
 from __future__ import annotations
 
 import codecs
+import logging
 
 from . import behavior
-from .base import ContentLine, backslashEscape, registerBehavior, str_
-from .icalendar import stringToTextValues
+from .base import (
+    ContentLine,
+    backslashEscape,
+    registerBehavior,
+    str_,
+    ParseError
+)
 
 """NOTE. Klaviyo has adapted this module for py3 only. This adapted module will not work for py2."""
 
@@ -263,6 +269,78 @@ class Photo(VCardTextBehavior):
 
 
 registerBehavior(Photo)
+
+# DQUOTE included to work around iCal's penchant for backslash escaping it,
+# although it isn't actually supposed to be escaped according to rfc2445 TEXT
+escapableCharList = '\\;,Nn"'
+
+def stringToTextValues(s, listSeparator=",", charList=None, strict=False):
+    """
+    Returns list of strings.
+    """
+    if charList is None:
+        charList = escapableCharList
+
+    def escapableChar(c):
+        return c in charList
+
+    def error(msg):
+        if strict:
+            raise ParseError(msg)
+        else:
+            logging.error(msg)
+
+    # vars which control state machine
+    charIterator = enumerate(s)
+    state = "read normal"
+
+    current = []
+    results = []
+
+    while True:
+        try:
+            charIndex, char = next(charIterator)
+        except Exception:
+            char = "eof"
+
+        if state == "read normal":
+            if char == "\\":
+                state = "read escaped char"
+            elif char == listSeparator:
+                state = "read normal"
+                current = "".join(current)
+                results.append(current)
+                current = []
+            elif char == "eof":
+                state = "end"
+            else:
+                state = "read normal"
+                current.append(char)
+
+        elif state == "read escaped char":
+            if escapableChar(char):
+                state = "read normal"
+                if char in "nN":
+                    current.append("\n")
+                else:
+                    current.append(char)
+            else:
+                state = "read normal"
+                # leave unrecognized escaped characters for later passes
+                current.append("\\" + char)
+
+        elif state == "end":  # an end state
+            if len(current) or len(results) == 0:
+                current = "".join(current)
+                results.append(current)
+            return results
+
+        elif state == "error":  # an end state
+            return results
+
+        else:
+            state = "error"
+            error("unknown state: '{0!s}' reached in {1!s}".format(state, s))
 
 
 def toListOrString(string):
