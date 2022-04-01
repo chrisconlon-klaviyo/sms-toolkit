@@ -744,7 +744,7 @@ patterns = {}
 
 # Note that underscore is not legal for names, it's included because
 # Lotus Notes uses it
-patterns["name"] = "[a-zA-Z0-9\-_]+"
+patterns["name"] = "[a-zA-Z0-9\\-_]+"
 patterns["safe_char"] = '[^";:,]'
 patterns["qsafe_char"] = '[^"]'
 
