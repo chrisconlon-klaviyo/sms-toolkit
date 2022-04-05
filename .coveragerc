@@ -3,7 +3,7 @@ branch = True
 source = sms_toolkit
 
 [report]
-fail_under = 1
+fail_under = 85
 exclude_lines =
     if self.debug:
     pragma: no cover
@@ -11,4 +11,5 @@ exclude_lines =
     if __name__ == .__main__.:
 ignore_errors = True
 omit =
+    sms_toolkit/vobject/*
     tests/*
