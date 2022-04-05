@@ -6,7 +6,6 @@ import logging
 from . import behavior
 
 from .base import ContentLine, registerBehavior, backslashEscape, str_, ParseError
-from .icalendar import stringToTextValues
 
 
 basestring = (str, bytes)
