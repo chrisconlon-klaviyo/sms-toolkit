@@ -11,5 +11,5 @@ exclude_lines =
     if __name__ == .__main__.:
 ignore_errors = True
 omit =
-    sms_toolkit/vobject
+    sms_toolkit/vobject/*
     tests/*
