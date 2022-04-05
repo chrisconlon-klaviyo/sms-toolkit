@@ -100,4 +100,4 @@ Acknowledgements
 ----------------
 
 Klaviyo has adapted the original `vobject <https://eventable.github.io/vobject/>`_ packaged in to this package.
-Klaviyo has adapted this module for py3 only. This adapted module will not work for py2.
+Klaviyo has adapted this module for py3 only. This adapted module may not work for py2.
