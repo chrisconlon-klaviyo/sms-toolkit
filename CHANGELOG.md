@@ -8,6 +8,9 @@ Major version bumps should be reserved for API-breaking releases or significant 
 - *CHANGE*: Behavior change of existing functionality, reserved for major version bumps
 
 ## Versions
+### 1.0.8
+- *ADDED* Added the vobject library (stripping it down to just the vcard class).
+
 ### 1.0.7
 - *BUGFIX* Fix the correct encoding in py2 and py3 for unicode characters outside the BMP
 

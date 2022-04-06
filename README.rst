@@ -99,5 +99,5 @@ Run tests:
 Acknowledgements
 ----------------
 
-Klaviyo has adapted the original `vobject <https://eventable.github.io/vobject/>`_ packaged in to this package.
-Klaviyo has adapted this module for py3 only. This adapted module may not work for py2.
+Klaviyo has adapted the original `vobject <https://eventable.github.io/vobject/>`_ packaged in to this package. We have
+only kept the vcard class from the original package, removing calendar functionality, etc.
