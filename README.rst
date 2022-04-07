@@ -95,3 +95,9 @@ Run tests:
 .. _here: https://github.com/chadselph/smssplit/blob/master/js/smssplit.js
 .. _these standards: https://en.wikipedia.org/wiki/SMS#Message_size
 .. _BMP: https://en.wikipedia.org/wiki/Plane_(Unicode)#Basic_Multilingual_Plane
+
+Acknowledgements
+----------------
+
+Klaviyo has adapted the original `vobject <https://eventable.github.io/vobject/>`_ packaged in to this package. We have
+only kept the vcard class from the original package, removing calendar functionality, etc.
