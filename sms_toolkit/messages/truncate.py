@@ -24,26 +24,37 @@ def truncate_message(message, limit, is_for_mms=False):
         encoding = utils.determine_encoding_for_string(message)
 
     if encoding == constants.UCS2_ENCODING:
-        segments = split_message_into_segments(
-            message,
-            limit * 2,
-            limit * 2,
-            utils.encode_unicode_character_to_utf16,
+        truncated_message = _perform_truncation(
+            message=message,
+            max_limit=limit * 2,
+            encoder=utils.encode_unicode_character_to_utf16,
         )
 
     elif encoding == constants.GSM_ENCODING:
-        segments = split_message_into_segments(
-            message,
-            limit,
-            limit,
-            utils.encode_unicode_character_to_gsm,
+        truncated_message = _perform_truncation(
+            message=message,
+            max_limit=limit,
+            encoder=utils.encode_unicode_character_to_gsm,
         )
 
     else:
         raise RuntimeError('Unknown encoding: {encoding}'.format(encoding=encoding))
 
-    if len(segments) > 0:
-        truncated_message = segments[0]["message"]
-    else:
-        truncated_message = message
+    return truncated_message
+
+
+def _perform_truncation(message, max_limit, encoder):
+    characters = utils.convert_to_unicode_characters(message)
+    if len(characters) == 0:
+        return message
+    truncated_message = ''
+    curr_len = 0
+
+    for i, character in enumerate(characters):
+        byte_group = encoder(character)
+        if curr_len + len(byte_group) > max_limit:
+            break
+        curr_len = curr_len + len(byte_group)
+        truncated_message += character
+
     return truncated_message

@@ -24,5 +24,4 @@ class TestTruncateMessage:
             ucs2_with_surrogate_pairs
     ):
         assert truncate_message(short_ucs2_text, 1) == u'S'
-        # assert truncate_message(short_ucs2_text, 14) == u'Sup chonus™ 🤙'
-
+        assert truncate_message(short_ucs2_text, 14) == u'Sup chonus™ 🤙'
