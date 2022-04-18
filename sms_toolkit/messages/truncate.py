@@ -11,7 +11,7 @@ def truncate_message(message, limit, is_for_mms=False):
     limit, or if the limit is invalid, then the message is returned without any modification.
 
     Args:
-        message (Text): The raw message string to profile.
+        message (basestring): The raw message string to profile.
         limit (int): The length upto which the message must be truncated. Must be greater than 0
         is_for_mms (bool): Is this message for mms sending.
 
