@@ -1,23 +1,26 @@
+from typing import Text
+
 from sms_toolkit import utils
 from sms_toolkit import constants
-from .profiling import split_message_into_segments
+from .normalization import normalize_to_unicode
 
 
 def truncate_message(message, limit, is_for_mms=False):
     """
-    Truncate the given message string upto the provided limit. If the message length is less than the
+    Truncate the given SMS message string upto the provided limit. If the SMS length is less than the
     limit, or if the limit is invalid, then the message is returned without any modification.
 
     Args:
-        message (basestring): The raw message string to profile.
+        message (Text): The raw message string to profile.
         limit (int): The length upto which the message must be truncated. Must be greater than 0
         is_for_mms (bool): Is this message for mms sending.
 
     Returns:
-        (basestring): The truncated message
+        (Text): The truncated message
     """
     if limit < 1:
-        return message
+        return normalize_to_unicode(message)
+
     if is_for_mms:
         encoding = constants.UCS2_ENCODING
     else:
@@ -45,12 +48,10 @@ def truncate_message(message, limit, is_for_mms=False):
 
 def _perform_truncation(message, max_limit, encoder):
     characters = utils.convert_to_unicode_characters(message)
-    if len(characters) == 0:
-        return message
-    truncated_message = ''
     curr_len = 0
 
-    for i, character in enumerate(characters):
+    truncated_message = u''
+    for character in characters:
         byte_group = encoder(character)
         if curr_len + len(byte_group) > max_limit:
             break
