@@ -27,6 +27,7 @@ def truncate_message(message, max_length, is_for_mms=False):
     if encoding == constants.UCS2_ENCODING:
         truncated_message = _perform_truncation(
             message=message,
+            # NOTE: We double the max-length for UCS-2 since each character takes 2 units of space
             max_length=max_length * 2,
             encoder=utils.encode_unicode_character_to_utf16,
         )
