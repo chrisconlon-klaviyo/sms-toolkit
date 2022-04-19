@@ -8,6 +8,9 @@ Major version bumps should be reserved for API-breaking releases or significant 
 - *CHANGE*: Behavior change of existing functionality, reserved for major version bumps
 
 ## Versions
+### 1.0.9
+- *ADDED* Added truncate message method
+
 ### 1.0.8
 - *ADDED* Added the vobject library (stripping it down to just the vcard class).
 
