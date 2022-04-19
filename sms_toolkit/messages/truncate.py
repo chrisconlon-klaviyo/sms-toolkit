@@ -1,5 +1,3 @@
-from typing import Text
-
 from sms_toolkit import utils
 from sms_toolkit import constants
 from .normalization import normalize_to_unicode
