@@ -77,6 +77,23 @@ and non-BMP (representing as 4 bytes in the byte-group) ranges which will be pro
     }
     '''
 
+
+Message Truncating
+~~~~~~~~~~~~~~~~~~
+
+Accepts a raw SMS message string, and the maximum length and truncates it. This also detects the right encoding
+and adjusts the character length accordingly.
+
+.. code-block:: python
+
+    from sms_toolkit import truncate_message
+    truncate_message("fuel ⛽ fiⓇe 🔥 emojis 😉", 22)
+
+    '''
+    # Outputs -
+    'fuel ⛽ fiⓇe 🔥 emojis '
+    '''
+
 Testing
 -------
 This library needs is tested against python 2 and 3. Both interpreters need to be available to tox

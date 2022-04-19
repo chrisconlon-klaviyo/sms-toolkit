@@ -1,3 +1,4 @@
 from sms_toolkit.messages.normalization import normalize_optimistic_gsm_characters
 from sms_toolkit.messages.profiling import profile_message
 from sms_toolkit.vobject import vCard
+from sms_toolkit.messages.truncate import truncate_message
